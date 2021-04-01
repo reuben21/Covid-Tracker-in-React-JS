@@ -1,0 +1,16 @@
+
+.inner_card {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    color:white;
+    font-size:20px;
+    border-radius:10px;
+    /*border:1px solid ;*/
+    padding: 20px;
+
+}
+
+
