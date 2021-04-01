@@ -151,6 +151,8 @@ class Maps extends Component {
 
                     newArray.push(newObj);
 
+                    return newArray;
+
                 });
 
                 this.setState({

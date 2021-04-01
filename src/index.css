@@ -25,3 +25,15 @@ code {
   font-family: 'Lato', sans-serif;
   color:white;
 }
+
+
+.table_cell_color_recovered {
+  font-family: 'Lato', sans-serif;
+  color:greenyellow;
+}
+
+.table_cell_color_Deaths {
+  font-family: 'Lato', sans-serif;
+  color:red;
+  font-size: medium;
+}

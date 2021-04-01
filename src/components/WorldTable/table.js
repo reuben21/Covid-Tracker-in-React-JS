@@ -3,19 +3,20 @@ import {DataGrid} from '@material-ui/data-grid';
 
 const columns = [
     {
-        field: 'State',
-        headerName: 'State',
-        width: 250,
+        field: 'Country',
+        headerName: 'Country',
+        width: 400,
         color: "white",
         headerAlign: 'center',
         headerClassName: "table_header_color",
         cellClassName: 'table_cell_color',
     },
+
     {
-        field: 'Active',
-        cellClassName: 'table_cell_color',
-        headerName: 'Active',
-        width: 150,
+        field: 'Recovered',
+        cellClassName: 'table_cell_color_recovered',
+        headerName: 'Recovered',
+        width: 200,
         headerAlign: 'center',
         headerClassName: "table_header_color"
     },
@@ -23,15 +24,39 @@ const columns = [
         field: 'Confirmed',
         cellClassName: 'table_cell_color',
         headerName: 'Confirmed',
-        width: 150,
+        width: 200,
         headerAlign: 'center',
         headerClassName: "table_header_color"
     },
     {
         field: 'Deaths',
-        cellClassName: 'table_cell_color',
+        cellClassName: 'table_cell_color_Deaths',
         headerName: 'Deaths',
-        width: 150,
+        width: 200,
+        headerAlign: 'center',
+        headerClassName: "table_header_color"
+    },
+    {
+        field: 'newConfirmed',
+        cellClassName: 'table_cell_color',
+        headerName: 'New Confirmed',
+        width: 200,
+        headerAlign: 'center',
+        headerClassName: "table_header_color"
+    },
+    {
+        field: 'newRecovered',
+        cellClassName: 'table_cell_color',
+        headerName: 'Newly Recovered',
+        width: 200,
+        headerAlign: 'center',
+        headerClassName: "table_header_color"
+    },
+    {
+        field: 'newDeaths',
+        cellClassName: 'table_cell_color',
+        headerName: 'New Deaths',
+        width: 200,
         headerAlign: 'center',
         headerClassName: "table_header_color"
     },
@@ -55,11 +80,11 @@ const columns = [
 
 const DataGridDemo = (props) => {
     return (
-        <div style={{height: 500, width: '100%', backgroundColor: "#323232", color: "white !important"}}>
+        <div style={{height: 1000, width: '100%', backgroundColor: "#323232", color: "white !important"}}>
             <DataGrid style={{
                 color: "white !important",
                 backgroundColor: "red"
-            }} rows={props.row} columns={columns} pageSize={7}/>
+            }} rows={props.row} columns={columns} pageSize={20}/>
         </div>
     );
 }

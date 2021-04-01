@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Maps from "../Maps/maps";
 import Table from '../Table/table';
+import WorldTable from '../WorldTable/table'
 import Css from './homepage.module.css'
 
 function abbreviateNumber(value) {
@@ -26,7 +27,8 @@ class Homepage extends Component {
 
     state = {
         tableRow: [],
-        worldTotal:{}
+        worldTotal:{},
+        worldTableRow:[],
     }
 
     componentDidMount() {
@@ -84,12 +86,13 @@ class Homepage extends Component {
                     }
 
                     newArray.push(newObj);
-
+                    return newArray;
                 });
 
                 this.setState({
                     tableRow: newArray,
                 })
+
 
             }).catch((error) => {
             return error;
@@ -114,6 +117,42 @@ class Homepage extends Component {
                     worldTotal: newObj,
                 })
 
+
+            }).catch((error) => {
+            return error;
+        })
+
+
+        fetch('https://api.covid19api.com/summary', {
+            method: 'GET',
+
+        })
+            .then(resp => resp.json())
+            .then(dNew => {
+
+                var newArray = []
+                dNew.Countries.map((i, j) => {
+                    // console.log(i)
+
+                    var newObj = {}
+                    newObj["id"] = i.ID;
+                    newObj["Country"] = i.Country;
+                    newObj["Deaths"] = i.TotalDeaths;
+                    newObj["Confirmed"] = i.TotalConfirmed;
+                    newObj["Recovered"] = i.TotalRecovered;
+                    newObj["newConfirmed"] = i.NewConfirmed;
+                    newObj["newDeaths"] = i.NewDeaths;
+                    newObj["newRecovered"] = i.NewRecovered;
+
+                    newArray.push(newObj);
+                    return newArray;
+                });
+
+                this.setState({
+                    worldTableRow: newArray,
+                })
+
+
             }).catch((error) => {
             return error;
         })
@@ -122,12 +161,41 @@ class Homepage extends Component {
     render() {
         return (
             <>
-                <div style={{
-                    margin: 60,
-
-                }}>
+                <div className={Css.homepage}>
                     <Grid container spacing={3}>
+
+
+                        <Grid item xs={12}>
+                            <Paper style={{
+                                padding:20,
+                                display:"flex",
+                                justifyContent:"center",
+                                backgroundColor:"#323232",
+                                color:"white",
+                                fontSize:"20px",
+                                borderRadius:"10px"
+                            }}> India's Covid Cases </Paper>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
+                            <Paper style={{
+                                height:"100%",
+                                backgroundColor:"#323232",
+                                borderRadius:"10px"
+                            }}> <Maps/> </Paper>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Paper style={{
+                                padding:20,
+                                display:"flex",
+                                justifyContent:"center",
+                                backgroundColor:"#323232",
+                                color:"white",
+                                fontSize:"20px",
+                                borderRadius:"10px",
+                                height:"92%"
+                            }}> <Table row={this.state.tableRow}/> </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
                             <div style={{
                                 padding:10,
                                 display:"flex",
@@ -152,7 +220,7 @@ class Homepage extends Component {
                                     borderRadius:"10px",
 
                                 }}>
-                                <div>World Count</div>
+                                    <div>World Count</div>
                                 </div>
                                 <div style={{
                                     padding:20,
@@ -171,7 +239,9 @@ class Homepage extends Component {
                                             Total Confirmed
 
                                         </div>
-                                        <div>
+                                        <div style={{
+                                            color:"indianred"
+                                        }}>
                                             {this.state.worldTotal.TotalConfirmed}
 
                                         </div>
@@ -182,7 +252,9 @@ class Homepage extends Component {
                                             Total Recovered
 
                                         </div>
-                                        <div>
+                                        <div style={{
+                                            color:"yellowgreen"
+                                        }}>
                                             {this.state.worldTotal.TotalRecovered}
 
                                         </div>
@@ -192,7 +264,9 @@ class Homepage extends Component {
                                         <div>
                                             Total Deaths
                                         </div>
-                                        <div>
+                                        <div style={{
+                                            color:"red"
+                                        }}>
                                             {this.state.worldTotal.TotalDeaths}
 
                                         </div>
@@ -200,64 +274,34 @@ class Homepage extends Component {
                                 </div>
                             </div>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <div style={{
-                                padding:20,
-                                display:"flex",
-                                justifyContent:"center",
-                                alignItems:"center",
-                                flexDirection:"column",
-                                backgroundColor:"#323232",
-                                color:"white",
-                                fontSize:"20px",
-                                borderRadius:"10px"
-                            }}>
-
-                            </div>
-                        </Grid>
                         <Grid item xs={12}>
-                            <Paper style={{
-                                padding:20,
-                                display:"flex",
-                                justifyContent:"center",
-                                backgroundColor:"#323232",
-                                color:"white",
-                                fontSize:"20px",
-                                borderRadius:"10px"
-                            }}> India Covid Cases </Paper>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Paper style={{
-                                height:"100%",
-                                backgroundColor:"#323232",
-                                borderRadius:"10px"
-                            }}> <Maps/> </Paper>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Paper style={{
-                                padding:20,
-                                display:"flex",
-                                justifyContent:"center",
-                                backgroundColor:"#323232",
-                                color:"white",
-                                fontSize:"20px",
-                                borderRadius:"10px",
-                                height:"92%"
-                            }}> <Table row={this.state.tableRow}/> </Paper>
-                        </Grid>
+                            <WorldTable  row={this.state.worldTableRow}/>
+                            {/*<div style={{*/}
+                            {/*    padding:20,*/}
+                            {/*    display:"flex",*/}
+                            {/*    justifyContent:"center",*/}
+                            {/*    alignItems:"center",*/}
+                            {/*    flexDirection:"column",*/}
+                            {/*    backgroundColor:"#323232",*/}
+                            {/*    color:"white",*/}
+                            {/*    fontSize:"20px",*/}
+                            {/*    borderRadius:"10px"*/}
+                            {/*}}>*/}
 
-                        <Grid item xs={6} sm={3}>
-                            <Paper>xs=6 sm=3</Paper>
+                            {/*</div>*/}
                         </Grid>
-                        <Grid item xs={6} sm={3}>
-                            <Paper>xs=6 sm=3</Paper>
-                        </Grid>
-                        <Grid item xs={6} sm={3}>
-                            <Paper>xs=6 sm=3</Paper>
-                        </Grid>
-                        <Grid item xs={6} sm={3}>
-                            <Paper>xs=6 sm=3</Paper>
-                        </Grid>
+                        {/*<Grid item xs={6} sm={3}>*/}
+                        {/*    <Paper>xs=6 sm=3</Paper>*/}
+                        {/*</Grid>*/}
+                        {/*<Grid item xs={6} sm={3}>*/}
+                        {/*    <Paper>xs=6 sm=3</Paper>*/}
+                        {/*</Grid>*/}
+                        {/*<Grid item xs={6} sm={3}>*/}
+                        {/*    <Paper>xs=6 sm=3</Paper>*/}
+                        {/*</Grid>*/}
+                        {/*<Grid item xs={6} sm={3}>*/}
+                        {/*    <Paper>xs=6 sm=3</Paper>*/}
+                        {/*</Grid>*/}
                     </Grid>
                 </div>
             </>
